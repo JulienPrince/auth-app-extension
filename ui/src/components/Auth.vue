@@ -67,53 +67,53 @@
 </template>
 
 <script>
-import { ref } from 'vue'
-import axios from 'axios'
-import isEmail from 'validator/es/lib/isEmail'
+import { ref } from "vue";
+import axios from "axios";
+import isEmail from "validator/es/lib/isEmail";
 
 export default {
-  name: 'Auth',
+  name: "QAuth",
 
   props: {
     store: Object,
   },
 
   setup({ store }) {
-    const email = ref('')
-    const password = ref('')
-    const loading = ref(false)
-    const showPassword = ref(false)
-    const forgottenPassword = ref(false)
+    const email = ref("");
+    const password = ref("");
+    const loading = ref(false);
+    const showPassword = ref(false);
+    const forgottenPassword = ref(false);
 
     const validations = {
       email: [
         (val) => !!val || "L'adresse email doit être fourni",
-        (val) => isEmail || 'Email non valide',
+        (val) => isEmail || "Email non valide",
       ],
-      password: [(val) => !!val || 'Le mot de passe doit être fourni'],
-    }
+      password: [(val) => !!val || "Le mot de passe doit être fourni"],
+    };
 
     const onSubmit = async () => {
       const data = {
         auth: { email: email.value, password: password.value },
-      }
+      };
 
       // The parent application must contain a store with an auth/setToken and auth/clearToken mutation
-      let response = ''
+      let response = "";
       try {
-        loading.value = true
-        response = await axios.post('https://api.sowellapp.com/tokens', data)
-        if (response.status == '201') {
-          store.commit('auth/setToken', response.data.jwt)
+        loading.value = true;
+        response = await axios.post("https://api.sowellapp.com/tokens", data);
+        if (response.status == "201") {
+          store.commit("auth/setToken", response.data.jwt);
         } else {
-          store.commit('auth/clearToken')
+          store.commit("auth/clearToken");
         }
-        loading.value = false
+        loading.value = false;
       } catch (err) {
-        store.commit('auth/clearToken')
-        loading.value = false
+        store.commit("auth/clearToken");
+        loading.value = false;
       }
-    }
+    };
 
     return {
       email,
@@ -123,15 +123,16 @@ export default {
       validations,
       onSubmit,
       forgottenPassword,
-    }
+    };
   },
-}
+};
 </script>
 
 <style scoped>
-.head, .q-page {
-  font-family: 'Arima'; 
-  opacity: 0.7; 
+.head,
+.q-page {
+  font-family: "Arima";
+  opacity: 0.7;
   font-size: 20px;
 }
 
@@ -144,6 +145,6 @@ export default {
   margin-top: 0 !important;
   margin-left: 25px !important;
   cursor: pointer;
-  color: #40c4ff
+  color: #40c4ff;
 }
 </style>

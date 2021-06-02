@@ -1,6 +1,6 @@
 <template>
   <q-page padding>
-    <Auth :store="$store" />
+    <q-auth />
   </q-page>
 </template>
 
